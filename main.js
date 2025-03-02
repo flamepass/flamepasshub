@@ -1,5 +1,6 @@
 /*! For license information please see out.js.LICENSE.txt */
-https://nettleweb.com/
+https:
+//nettleweb.com/
 
 /*! Copyright (C) 2024 nettleweb.com; All rights reserved. !*/
 "use strict";
@@ -15,11 +16,12 @@ https://nettleweb.com/
     return new Promise((e, t) => {
       try {
         let n = true;
-        const o = self.indexedDB.open("validate-browser-context-for-indexeddb-analytics-module");
+        const r = "validate-browser-context-for-indexeddb-analytics-module";
+        const o = self.indexedDB.open(r);
         o.onsuccess = () => {
           o.result.close();
           if (!n) {
-            self.indexedDB.deleteDatabase("validate-browser-context-for-indexeddb-analytics-module");
+            self.indexedDB.deleteDatabase(r);
           }
           e(true);
         };
@@ -233,7 +235,7 @@ https://nettleweb.com/
       };
     }
     const o = Object.assign({
-      name: "[DEFAULT]",
+      name: An,
       automaticDataCollectionEnabled: false
     }, t);
     const a = o.name;
@@ -295,7 +297,7 @@ https://nettleweb.com/
         upgrade: (e, t) => {
           if (0 === t) {
             try {
-              e.createObjectStore("firebase-heartbeat-store");
+              e.createObjectStore(Mn);
             } catch (e) {}
           }
         }
@@ -309,8 +311,8 @@ https://nettleweb.com/
   }
   async function b(e, t) {
     try {
-      const n = (await g()).transaction("firebase-heartbeat-store", "readwrite");
-      const r = n.objectStore("firebase-heartbeat-store");
+      const n = (await g()).transaction(Mn, "readwrite");
+      const r = n.objectStore(Mn);
       await r.put(t, `${e.name}!${e.options.appId}`);
       await n.done;
     } catch (e) {
@@ -377,7 +379,7 @@ https://nettleweb.com/
   }) {
     const n = T(e);
     n.append("Authorization", function (e) {
-      return `${"FIS_v2"} ${e}`;
+      return `${Hn} ${e}`;
     }(t));
     return n;
   }
@@ -396,7 +398,9 @@ https://nettleweb.com/
       (self.crypto || self.msCrypto).getRandomValues(e);
       e[0] = 112 + e[0] % 16;
       const t = function (e) {
-        const t = btoa(String.fromCharCode(...e)).replace(/\+/g, "-").replace(/\//g, "_");
+        n = e;
+        const t = btoa(String.fromCharCode(...n)).replace(/\+/g, "-").replace(/\//g, "_");
+        var n;
         return t.substr(0, 22);
       }(e);
       return zn.test(t) ? t : "";
@@ -447,7 +451,7 @@ https://nettleweb.com/
       Gn = l("firebase-installations-database", 1, {
         upgrade: (e, t) => {
           if (0 === t) {
-            e.createObjectStore("firebase-installations-store");
+            e.createObjectStore(Vn);
           }
         }
       });
@@ -456,8 +460,8 @@ https://nettleweb.com/
   }
   async function F(e, t) {
     const n = `${e.appName}!${e.appId}`;
-    const r = (await D()).transaction("firebase-installations-store", "readwrite");
-    const o = r.objectStore("firebase-installations-store");
+    const r = (await D()).transaction(Vn, "readwrite");
+    const o = r.objectStore(Vn);
     const a = await o.get(n);
     await o.put(t, n);
     await r.done;
@@ -468,14 +472,14 @@ https://nettleweb.com/
   }
   async function N(e) {
     const t = `${e.appName}!${e.appId}`;
-    const n = (await D()).transaction("firebase-installations-store", "readwrite");
-    await n.objectStore("firebase-installations-store").delete(t);
+    const n = (await D()).transaction(Vn, "readwrite");
+    await n.objectStore(Vn).delete(t);
     await n.done;
   }
   async function B(e, t) {
     const n = `${e.appName}!${e.appId}`;
-    const r = (await D()).transaction("firebase-installations-store", "readwrite");
-    const o = r.objectStore("firebase-installations-store");
+    const r = (await D()).transaction(Vn, "readwrite");
+    const o = r.objectStore(Vn);
     const a = await o.get(n);
     const i = t(a);
     if (undefined === i) {
@@ -533,7 +537,7 @@ https://nettleweb.com/
                 }
                 const i = {
                   fid: n,
-                  authVersion: "FIS_v2",
+                  authVersion: Hn,
                   appId: e.appId,
                   sdkVersion: Un
                 };
@@ -613,7 +617,7 @@ https://nettleweb.com/
     });
   }
   function z(e) {
-    return 1 === (t = e).registrationStatus && t.registrationTime + 1e4 < Date.now() ? {
+    return 1 === (t = e).registrationStatus && t.registrationTime + Bn < Date.now() ? {
       fid: e.fid,
       registrationStatus: 0
     } : e;
@@ -728,7 +732,7 @@ https://nettleweb.com/
         throw Rn.create("not-registered");
       }
       const t = e.authToken;
-      return 1 === (n = t).requestStatus && n.requestTime + 1e4 < Date.now() ? Object.assign(Object.assign({}, e), {
+      return 1 === (n = t).requestStatus && n.requestTime + Bn < Date.now() ? Object.assign(Object.assign({}, e), {
         authToken: {
           requestStatus: 0
         }
@@ -740,6 +744,7 @@ https://nettleweb.com/
     return undefined !== e && 2 === e.registrationStatus;
   }
   async function J(e, t = false) {
+    const n = e;
     await async function (e) {
       const {
         registrationPromise: t
@@ -747,8 +752,8 @@ https://nettleweb.com/
       if (t) {
         await t;
       }
-    }(e);
-    return (await q(e, t)).token;
+    }(n);
+    return (await q(n, t)).token;
   }
   function X(e) {
     return Rn.create("missing-app-config-values", {
@@ -756,7 +761,7 @@ https://nettleweb.com/
     });
   }
   function K(e) {
-    if (!e.startsWith("https://www.googletagmanager.com/gtag/js")) {
+    if (!e.startsWith(Zn)) {
       const t = Qn.create("invalid-gtag-resource", {
         gtagURL: e
       });
@@ -779,7 +784,8 @@ https://nettleweb.com/
       createScriptURL: K
     });
     const r = document.createElement("script");
-    r.src = n ? null == n ? undefined : n.createScriptURL(`${Zn}?l=${e}&id=${t}`) : `${Zn}?l=${e}&id=${t}`;
+    const o = `${Zn}?l=${e}&id=${t}`;
+    r.src = n ? null == n ? undefined : n.createScriptURL(o) : o;
     r.async = true;
     document.head.appendChild(r);
   }
@@ -955,16 +961,17 @@ https://nettleweb.com/
       a.deleteThrottleMetadata(s);
       return t;
     } catch (t) {
+      const l = t;
       if (!function (e) {
         if (!(e instanceof wt && e.customData)) {
           return false;
         }
         const t = Number(e.customData.httpStatus);
         return 429 === t || 500 === t || 503 === t || 504 === t;
-      }(t)) {
+      }(l)) {
         a.deleteThrottleMetadata(s);
         if (c) {
-          Yn.warn("Failed to fetch this Firebase app's measurement ID from the server. Falling back to the measurement ID " + c + ` provided in the "measurementId" field in the local Firebase config. [${null == t ? undefined : t.message}]`);
+          Yn.warn("Failed to fetch this Firebase app's measurement ID from the server. Falling back to the measurement ID " + c + ` provided in the "measurementId" field in the local Firebase config. [${null == l ? undefined : l.message}]`);
           return {
             appId: s,
             measurementId: c
@@ -972,7 +979,7 @@ https://nettleweb.com/
         }
         throw t;
       }
-      const d = 503 === Number(null === (i = null == t ? undefined : t.customData) || undefined === i ? undefined : i.httpStatus) ? o(n, a.intervalMillis, 30) : o(n, a.intervalMillis);
+      const d = 503 === Number(null === (i = null == l ? undefined : l.customData) || undefined === i ? undefined : i.httpStatus) ? o(n, a.intervalMillis, 30) : o(n, a.intervalMillis);
       const u = {
         throttleEndTimeMillis: Date.now() + d,
         backoffCount: n + 1
@@ -1018,7 +1025,7 @@ https://nettleweb.com/
     const [h, p] = await Promise.all([d, u]);
     if (!function (e) {
       const t = window.document.getElementsByTagName("script");
-      for (const n of Object.values(t)) if (n.src && n.src.includes("https://www.googletagmanager.com/gtag/js") && n.src.includes(e)) {
+      for (const n of Object.values(t)) if (n.src && n.src.includes(Zn) && n.src.includes(e)) {
         return n;
       }
       return null;
@@ -1087,7 +1094,7 @@ https://nettleweb.com/
         } else {
           window[e] = t;
         }
-      }("dataLayer");
+      }(lr);
       const {
         wrappedGtag: e,
         gtagCore: t
@@ -1103,17 +1110,17 @@ https://nettleweb.com/
           gtagCore: a,
           wrappedGtag: window[o]
         };
-      }(or, ar, ir, "dataLayer", "gtag");
+      }(or, ar, ir, lr, dr);
       cr = e;
       sr = t;
       ur = true;
     }
-    or[r] = oe(e, ar, ir, t, sr, "dataLayer", n);
+    or[r] = oe(e, ar, ir, t, sr, lr, n);
     return new rr(e);
   }
-  function se(e = function (e = "[DEFAULT]") {
+  function se(e = function (e = An) {
     const t = xn.get(e);
-    if (!t && e === "[DEFAULT]" && yt()) {
+    if (!t && e === An && yt()) {
       return f();
     }
     if (!t) {
@@ -1123,9 +1130,9 @@ https://nettleweb.com/
     }
     return t;
   }()) {
-    const t = p(e = e && e._delegate ? e._delegate : e, "analytics");
+    const t = p(e = e && e._delegate ? e._delegate : e, Kn);
     return t.isInitialized() ? t.getImmediate() : function (e, t = {}) {
-      const r = p(e, "analytics");
+      const r = p(e, Kn);
       if (r.isInitialized()) {
         const e = r.getImmediate();
         if (n(t, r.getOptions())) {
@@ -1199,14 +1206,14 @@ https://nettleweb.com/
               }
               return o;
             }
-            t("keyvalue");
-            t("emoji", "unicode", {
-              ["tokens"]: ["tokens", true],
-              ["group-order"]: [["group", "order"]],
-              ["skinUnicodes"]: ["skinUnicodes", true]
+            t(mr);
+            t(fr, "unicode", {
+              [br]: ["tokens", true],
+              [vr]: [["group", "order"]],
+              [Tr]: ["skinUnicodes", true]
             });
-            t("favorites", undefined, {
-              ["count"]: [""]
+            t(gr, undefined, {
+              [yr]: [""]
             });
           })(r.result);
         }
@@ -1328,15 +1335,15 @@ https://nettleweb.com/
         });
         return t;
       }(t);
-      await fe(e, ["emoji", "keyvalue"], "readwrite", ([e, t], a) => {
+      await fe(e, [fr, mr], Ar, ([e, t], a) => {
         function i() {
           if (2 == ++l) {
             (function () {
               if (s !== r || c !== n) {
                 e.clear();
                 for (const t of o) e.put(t);
-                t.put(r, "eTag");
-                t.put(n, "url");
+                t.put(r, wr);
+                t.put(n, kr);
                 ke(a);
               }
             })();
@@ -1345,11 +1352,11 @@ https://nettleweb.com/
         let s;
         let c;
         let l = 0;
-        ve(t, "eTag", e => {
+        ve(t, wr, e => {
           s = e;
           i();
         });
-        ve(t, "url", e => {
+        ve(t, kr, e => {
           c = e;
           i();
         });
@@ -1358,7 +1365,7 @@ https://nettleweb.com/
   }
   async function Ae(e, t) {
     const n = be(ge(t));
-    return n.length ? fe(e, "emoji", "readonly", (e, t, r) => {
+    return n.length ? fe(e, fr, Er, (e, t, r) => {
       const o = [];
       const a = () => {
         const e = Ce(o, e => e.unicode);
@@ -1367,7 +1374,7 @@ https://nettleweb.com/
       for (let t = 0; t < n.length; t++) {
         const r = n[t];
         const i = t === n.length - 1 ? IDBKeyRange.bound(r, r + "\uffff", false, true) : IDBKeyRange.only(r);
-        we(e.index("tokens"), i, e => {
+        we(e.index(br), i, e => {
           o.push(e);
           if (o.length === n.length) {
             a();
@@ -1381,7 +1388,7 @@ https://nettleweb.com/
     if (!n.length) {
       const n = e => (e.shortcodes || []).includes(t.toLowerCase());
       return (await async function (e, t) {
-        return fe(e, "emoji", "readonly", (e, n, r) => {
+        return fe(e, fr, Er, (e, n, r) => {
           let o;
           const a = () => {
             e.getAll(o && IDBKeyRange.lowerBound(o, true), 50).onsuccess = e => {
@@ -1408,7 +1415,7 @@ https://nettleweb.com/
     })[0] || null;
   }
   function xe(e, t, n) {
-    return fe(e, t, "readonly", (e, t, r) => ve(e, n, r));
+    return fe(e, t, Er, (e, t, r) => ve(e, n, r));
   }
   function Se(e) {
     !function (e) {
@@ -1575,7 +1582,7 @@ https://nettleweb.com/
       }
     }
     if (!(await async function (e, t, n) {
-      const [r, o] = await Promise.all(["eTag", "url"].map(t => xe(e, "keyvalue", t)));
+      const [r, o] = await Promise.all([wr, kr].map(t => xe(e, mr, t)));
       return r === n && o === t;
     }(e, t, r))) {
       if (!n) {
@@ -2143,7 +2150,7 @@ https://nettleweb.com/
         h.activeSkinTone = h.currentSkinTone;
         if (h.skinTonePickerExpanded) {
           De(e);
-          requestAnimationFrame(() => m("skintone-list"));
+          Vr(() => m("skintone-list"));
         }
       },
       onEmojiClick: async function (e) {
@@ -2276,7 +2283,7 @@ https://nettleweb.com/
             r = new ResizeObserver(n);
             r.observe(e);
           } else {
-            requestAnimationFrame(n);
+            Vr(n);
           }
           t.addEventListener("abort", () => {
             if (r) {
@@ -2461,7 +2468,7 @@ https://nettleweb.com/
       }();
     });
     const S = () => {
-      requestAnimationFrame(() => {
+      Vr(() => {
         var e;
         if (e = l.tabpanelElement) {
           e.scrollTop = 0;
@@ -2476,7 +2483,7 @@ https://nettleweb.com/
       const n = e.filter(e => e.unicode).filter(e => e.unicode.includes("\u200d") && !qr.has(e.unicode));
       if (!t && n.length) {
         w(e);
-        requestAnimationFrame(() => r(n));
+        Vr(() => r(n));
       } else {
         const n = t ? e : e.filter(o);
         w(n);
@@ -2979,6 +2986,7 @@ https://nettleweb.com/
     }
     create(e, ...t) {
       const n = t[0] || {};
+      const r = `${this.service}/${e}`;
       const o = this.errors[e];
       const a = o ? function (e, t) {
         return e.replace(Ct, (e, n) => {
@@ -2986,7 +2994,8 @@ https://nettleweb.com/
           return null != r ? r + "" : `<${n}?>`;
         });
       }(o, n) : "Error";
-      return new wt(`${this.service}/${e}`, `${this.serviceName}: ${a} (${`${this.service}/${e}`}).`, n);
+      const i = `${this.serviceName}: ${a} (${r}).`;
+      return new wt(r, i, n);
     }
   }
   const Ct = /\{\$([^}]+)}/g;
@@ -3017,6 +3026,7 @@ https://nettleweb.com/
       return this;
     }
   }
+  const At = "[DEFAULT]";
   class Tt {
     constructor(e, t) {
       this.name = e;
@@ -3083,7 +3093,7 @@ https://nettleweb.com/
         }(e)) {
           try {
             this.getOrInitializeService({
-              instanceIdentifier: "[DEFAULT]"
+              instanceIdentifier: At
             });
           } catch (e) {}
         }
@@ -3098,7 +3108,7 @@ https://nettleweb.com/
         }
       }
     }
-    clearInstance(e = "[DEFAULT]") {
+    clearInstance(e = At) {
       this.instancesDeferred.delete(e);
       this.instancesOptions.delete(e);
       this.instances.delete(e);
@@ -3110,10 +3120,10 @@ https://nettleweb.com/
     isComponentSet() {
       return null != this.component;
     }
-    isInitialized(e = "[DEFAULT]") {
+    isInitialized(e = At) {
       return this.instances.has(e);
     }
-    getOptions(e = "[DEFAULT]") {
+    getOptions(e = At) {
       return this.instancesOptions.get(e) || {};
     }
     initialize(e = {}) {
@@ -3164,7 +3174,7 @@ https://nettleweb.com/
     }) {
       let n = this.instances.get(e);
       if (!n && this.component && (n = this.component.instanceFactory(this.container, {
-        instanceIdentifier: (r = e, r === "[DEFAULT]" ? undefined : r),
+        instanceIdentifier: (r = e, r === At ? undefined : r),
         options: t
       }), this.instances.set(e, n), this.instancesOptions.set(e, t), this.invokeOnInitCallbacks(n, e), this.component.onInstanceCreated)) {
         try {
@@ -3174,8 +3184,8 @@ https://nettleweb.com/
       var r;
       return n || null;
     }
-    normalizeInstanceIdentifier(e = "[DEFAULT]") {
-      return this.component ? this.component.multipleInstances ? e : "[DEFAULT]" : e;
+    normalizeInstanceIdentifier(e = At) {
+      return this.component ? this.component.multipleInstances ? e : At : e;
     }
     shouldAutoInitialize() {
       return !!this.component && "EXPLICIT" !== this.component.instantiationMode;
@@ -3361,36 +3371,65 @@ https://nettleweb.com/
       }).filter(e => e).join(" ");
     }
   }
+  const Xt = "@firebase/app";
+  const Kt = "0.11.1";
   const Zt = new Ot("@firebase/app");
+  const Yt = "@firebase/app-compat";
+  const Qt = "@firebase/analytics-compat";
+  const $t = "@firebase/analytics";
+  const en = "@firebase/app-check-compat";
+  const tn = "@firebase/app-check";
+  const nn = "@firebase/auth";
+  const rn = "@firebase/auth-compat";
+  const on = "@firebase/database";
+  const an = "@firebase/data-connect";
+  const sn = "@firebase/database-compat";
+  const cn = "@firebase/functions";
+  const ln = "@firebase/functions-compat";
+  const dn = "@firebase/installations";
+  const un = "@firebase/installations-compat";
+  const hn = "@firebase/messaging";
+  const pn = "@firebase/messaging-compat";
+  const fn = "@firebase/performance";
+  const mn = "@firebase/performance-compat";
+  const gn = "@firebase/remote-config";
+  const bn = "@firebase/remote-config-compat";
+  const yn = "@firebase/storage";
+  const vn = "@firebase/storage-compat";
+  const wn = "@firebase/firestore";
+  const kn = "@firebase/vertexai";
+  const Cn = "@firebase/firestore-compat";
+  const En = "firebase";
+  const An = "[DEFAULT]";
   const Tn = {
-    ["@firebase/app"]: "fire-core",
-    ["@firebase/app-compat"]: "fire-core-compat",
-    ["@firebase/analytics"]: "fire-analytics",
-    ["@firebase/analytics-compat"]: "fire-analytics-compat",
-    ["@firebase/app-check"]: "fire-app-check",
-    ["@firebase/app-check-compat"]: "fire-app-check-compat",
-    ["@firebase/auth"]: "fire-auth",
-    ["@firebase/auth-compat"]: "fire-auth-compat",
-    ["@firebase/database"]: "fire-rtdb",
-    ["@firebase/data-connect"]: "fire-data-connect",
-    ["@firebase/database-compat"]: "fire-rtdb-compat",
-    ["@firebase/functions"]: "fire-fn",
-    ["@firebase/functions-compat"]: "fire-fn-compat",
-    ["@firebase/installations"]: "fire-iid",
-    ["@firebase/installations-compat"]: "fire-iid-compat",
-    ["@firebase/messaging"]: "fire-fcm",
-    ["@firebase/messaging-compat"]: "fire-fcm-compat",
-    ["@firebase/performance"]: "fire-perf",
-    ["@firebase/performance-compat"]: "fire-perf-compat",
-    ["@firebase/remote-config"]: "fire-rc",
-    ["@firebase/remote-config-compat"]: "fire-rc-compat",
-    ["@firebase/storage"]: "fire-gcs",
-    ["@firebase/storage-compat"]: "fire-gcs-compat",
-    ["@firebase/firestore"]: "fire-fst",
-    ["@firebase/firestore-compat"]: "fire-fst-compat",
-    ["@firebase/vertexai"]: "fire-vertex",
+    [Xt]: "fire-core",
+    [Yt]: "fire-core-compat",
+    [$t]: "fire-analytics",
+    [Qt]: "fire-analytics-compat",
+    [tn]: "fire-app-check",
+    [en]: "fire-app-check-compat",
+    [nn]: "fire-auth",
+    [rn]: "fire-auth-compat",
+    [on]: "fire-rtdb",
+    [an]: "fire-data-connect",
+    [sn]: "fire-rtdb-compat",
+    [cn]: "fire-fn",
+    [ln]: "fire-fn-compat",
+    [dn]: "fire-iid",
+    [un]: "fire-iid-compat",
+    [hn]: "fire-fcm",
+    [pn]: "fire-fcm-compat",
+    [fn]: "fire-perf",
+    [mn]: "fire-perf-compat",
+    [gn]: "fire-rc",
+    [bn]: "fire-rc-compat",
+    [yn]: "fire-gcs",
+    [vn]: "fire-gcs-compat",
+    [wn]: "fire-fst",
+    [Cn]: "fire-fst-compat",
+    [kn]: "fire-vertex",
     "fire-js": "fire-js",
-    ["firebase"]: "fire-js-all"
+    [En]: "fire-js-all"
   };
   const xn = new Map();
   const Sn = new Map();
@@ -3458,6 +3497,7 @@ https://nettleweb.com/
       }
     }
   }
+  const Mn = "firebase-heartbeat-store";
   let _n = null;
   class On {
     constructor(e) {
@@ -3583,8 +3623,8 @@ https://nettleweb.com/
       if (await this._canUseIndexedDBPromise) {
         const e = await async function (e) {
           try {
-            const t = (await g()).transaction("firebase-heartbeat-store");
-            const n = await t.objectStore("firebase-heartbeat-store").get(`${e.name}!${e.options.appId}`);
+            const t = (await g()).transaction(Mn);
+            const n = await t.objectStore(Mn).get(`${e.name}!${e.options.appId}`);
             await t.done;
             return n;
           } catch (e) {
@@ -3627,14 +3667,19 @@ https://nettleweb.com/
       }
     }
   }
-  "";
+  var Dn;
+  Dn = "";
   h(new Et("platform-logger", e => new Jt(e), "PRIVATE"));
   h(new Et("heartbeat", e => new On(e), "PRIVATE"));
-  m("@firebase/app", "0.11.1", "");
-  m("@firebase/app", "0.11.1", "esm2017");
+  m(Xt, Kt, Dn);
+  m(Xt, Kt, "esm2017");
   m("fire-js", "");
   m("firebase", "11.3.1", "app");
-  const Un = "w:0.6.12";
+  const Fn = "@firebase/installations";
+  const Nn = "0.6.12";
+  const Bn = 1e4;
+  const Un = "w:" + Nn;
+  const Hn = "FIS_v2";
   const Rn = new kt("installations", "Installations", {
     "missing-app-config-values": 'Missing App configuration value: "{$valueName}"',
     "not-registered": "Firebase Installation is not registered.",
@@ -3646,26 +3691,29 @@ https://nettleweb.com/
   const zn = /^[cdef][\w-]{21}$/;
   const Wn = new Map();
   let qn = null;
+  const Vn = "firebase-installations-store";
   let Gn = null;
+  const Jn = "installations";
   const Xn = e => {
-    const t = p(e.getProvider("app").getImmediate(), "installations").getImmediate();
+    const t = p(e.getProvider("app").getImmediate(), Jn).getImmediate();
     return {
       getId: () => async function (e) {
+        const t = e;
         const {
           installationEntry: n,
           registrationPromise: r
-        } = await U(e);
+        } = await U(t);
         if (r) {
           r.catch(console.error);
         } else {
-          q(e).catch(console.error);
+          q(t).catch(console.error);
         }
         return n.fid;
       }(t),
       getToken: e => J(t, e)
     };
   };
-  h(new Et("installations", e => {
+  h(new Et(Jn, e => {
     const t = e.getProvider("app").getImmediate();
     const n = function (e) {
       if (!e || !e.options) {
@@ -3699,8 +3747,10 @@ https://nettleweb.com/
     };
   }, "PUBLIC"));
   h(new Et("installations-internal", Xn, "PRIVATE"));
-  m("@firebase/installations", "0.6.12");
-  m("@firebase/installations", "0.6.12", "esm2017");
+  m(Fn, Nn);
+  m(Fn, Nn, "esm2017");
+  const Kn = "analytics";
+  const Zn = "https://www.googletagmanager.com/gtag/js";
   const Yn = new Ot("@firebase/analytics");
   const Qn = new kt("analytics", "Analytics", {
     "already-exists": "A Firebase Analytics instance with the appId {$id}  already exists. Only one Firebase Analytics instance can be created for each appId.",
@@ -3758,13 +3808,17 @@ https://nettleweb.com/
   const ir = {};
   let sr;
   let cr;
+  let lr = "dataLayer";
+  let dr = "gtag";
   let ur = false;
-  h(new Et("analytics", (e, {
+  const hr = "@firebase/analytics";
+  const pr = "0.10.11";
+  h(new Et(Kn, (e, {
     options: t
   }) => ie(e.getProvider("app").getImmediate(), e.getProvider("installations-internal").getImmediate(), t), "PUBLIC"));
   h(new Et("analytics-internal", function (e) {
     try {
-      const t = e.getProvider("analytics").getImmediate();
+      const t = e.getProvider(Kn).getImmediate();
       return {
         logEvent: (e, n, r) => ce(t, e, n, r)
       };
@@ -3774,8 +3828,20 @@ https://nettleweb.com/
       });
     }
   }, "PRIVATE"));
-  m("@firebase/analytics", "0.10.11");
-  m("@firebase/analytics", "0.10.11", "esm2017");
+  m(hr, pr);
+  m(hr, pr, "esm2017");
+  const fr = "emoji";
+  const mr = "keyvalue";
+  const gr = "favorites";
+  const br = "tokens";
+  const yr = "count";
+  const vr = "group-order";
+  const wr = "eTag";
+  const kr = "url";
+  const Cr = "skinTone";
+  const Er = "readonly";
+  const Ar = "readwrite";
+  const Tr = "skinUnicodes";
   const xr = {};
   const Sr = {};
   const Lr = {};
@@ -3814,7 +3880,7 @@ https://nettleweb.com/
       }(this._dbName, this._clear);
       const n = this.dataSource;
       const r = await async function (e) {
-        return !(await xe(e, "keyvalue", "url"));
+        return !(await xe(e, mr, kr));
       }(e);
       if (r) {
         await async function (e, t) {
@@ -3839,9 +3905,9 @@ https://nettleweb.com/
       de(e);
       await this.ready();
       return ue(await async function (e, t) {
-        return fe(e, "emoji", "readonly", (e, n, r) => {
+        return fe(e, fr, Er, (e, n, r) => {
           const o = IDBKeyRange.bound([t, 0], [t + 1, 0], false, true);
-          we(e.index("group-order"), o, r);
+          we(e.index(vr), o, r);
         });
       }(this._db, e)).map(Le);
     }
@@ -3861,45 +3927,47 @@ https://nettleweb.com/
       await this.ready();
       const t = this._custom.byName(e);
       return t || Le(await async function (e, t) {
-        return fe(e, "emoji", "readonly", (e, n, r) => ve(e, t, n => {
+        return fe(e, fr, Er, (e, n, r) => ve(e, t, n => {
           if (n) {
             return r(n);
           }
-          ve(e.index("skinUnicodes"), t, e => r(e || null));
+          ve(e.index(Tr), t, e => r(e || null));
         }));
       }(this._db, e));
     }
     async getPreferredSkinTone() {
       await this.ready();
-      return (await xe(this._db, "keyvalue", "skinTone")) || 0;
+      return (await xe(this._db, mr, Cr)) || 0;
     }
     async setPreferredSkinTone(e) {
       de(e);
       await this.ready();
       return function (e, t, n, r) {
-        return fe(e, t, "readwrite", (e, t) => {
+        return fe(e, t, Ar, (e, t) => {
           e.put(r, n);
           ke(t);
         });
-      }(this._db, "keyvalue", "skinTone", e);
+      }(this._db, mr, Cr, e);
     }
     async incrementFavoriteEmojiCount(e) {
       le(e);
       await this.ready();
       t = this._db;
-      return fe(t, "favorites", "readwrite", (e, t) => ve(e, e, r => {
-        e.put((r || 0) + 1, e);
+      n = e;
+      return fe(t, gr, Ar, (e, t) => ve(e, n, r => {
+        e.put((r || 0) + 1, n);
         ke(t);
       }));
       var t;
+      var n;
     }
     async getTopFavoriteEmoji(e) {
       de(e);
       await this.ready();
       return (await function (e, t, n) {
-        return 0 === n ? [] : fe(e, ["favorites", "emoji"], "readonly", ([e, r], o, a) => {
+        return 0 === n ? [] : fe(e, [gr, fr], Er, ([e, r], o, a) => {
           const i = [];
-          e.index("count").openCursor(undefined, "prev").onsuccess = e => {
+          e.index(yr).openCursor(undefined, "prev").onsuccess = e => {
             function o(e) {
               i.push(e);
               if (i.length === n) {
@@ -3978,6 +4046,7 @@ https://nettleweb.com/
     "\u{1f603}": .6
   };
   const Br = ["\u{1f60a}", "\u{1f612}", "\u2764\ufe0f", "\u{1f44d}\ufe0f", "\u{1f60d}", "\u{1f602}", "\u{1f62d}", "\u263a\ufe0f", "\u{1f614}", "\u{1f629}", "\u{1f60f}", "\u{1f495}", "\u{1f64c}", "\u{1f618}"];
+  const Ur = '"Twemoji Mozilla","Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji","EmojiOne Color","Android Emoji",sans-serif';
   const Hr = (e, t) => e < t ? -1 : e > t ? 1 : 0;
   const Rr = (e, t) => {
     const n = document.createElement("canvas");
@@ -3986,7 +4055,7 @@ https://nettleweb.com/
       willReadFrequently: true
     });
     r.textBaseline = "top";
-    r.font = "100px \"Twemoji Mozilla\",\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\",\"EmojiOne Color\",\"Android Emoji\",sans-serif";
+    r.font = "100px " + Ur;
     r.fillStyle = t;
     r.scale(.01, .01);
     r.fillText(e, 0, 0);
@@ -4003,6 +4072,7 @@ https://nettleweb.com/
     return e[0][1];
   }())))), zr);
   const qr = new Map();
+  const Vr = requestAnimationFrame;
   let Gr;
   let Jr = "function" == typeof ResizeObserver;
   const Xr = new WeakMap();
@@ -4043,6 +4113,7 @@ https://nettleweb.com/
     }
   };
   const ro = ["customEmoji", "customCategorySorting", "database", "dataSource", "i18n", "locale", "skinToneEmoji", "emojiVersion"];
+  const oo = `:host{--emoji-font-family:${Ur}}`;
   class ao extends HTMLElement {
     constructor(e) {
       super();
@@ -4050,7 +4121,7 @@ https://nettleweb.com/
         mode: "open"
       });
       const t = document.createElement("style");
-      t.textContent = ':host{--emoji-size:1.375rem;--emoji-padding:0.5rem;--category-emoji-size:var(--emoji-size);--category-emoji-padding:var(--emoji-padding);--indicator-height:3px;--input-border-radius:0.5rem;--input-border-size:1px;--input-font-size:1rem;--input-line-height:1.5;--input-padding:0.25rem;--num-columns:8;--outline-size:2px;--border-size:1px;--border-radius:0;--skintone-border-radius:1rem;--category-font-size:1rem;display:flex;width:min-content;height:400px}:host,:host(.light){color-scheme:light;--background:#fff;--border-color:#e0e0e0;--indicator-color:#385ac1;--input-border-color:#999;--input-font-color:#111;--input-placeholder-color:#999;--outline-color:#999;--category-font-color:#111;--button-active-background:#e6e6e6;--button-hover-background:#d9d9d9}:host(.dark){color-scheme:dark;--background:#222;--border-color:#444;--indicator-color:#5373ec;--input-border-color:#ccc;--input-font-color:#efefef;--input-placeholder-color:#ccc;--outline-color:#fff;--category-font-color:#efefef;--button-active-background:#555555;--button-hover-background:#484848}@media (prefers-color-scheme:dark){:host{color-scheme:dark;--background:#222;--border-color:#444;--indicator-color:#5373ec;--input-border-color:#ccc;--input-font-color:#efefef;--input-placeholder-color:#ccc;--outline-color:#fff;--category-font-color:#efefef;--button-active-background:#555555;--button-hover-background:#484848}}:host([hidden]){display:none}button{margin:0;padding:0;border:0;background:0 0;box-shadow:none;-webkit-tap-highlight-color:transparent}button::-moz-focus-inner{border:0}input{padding:0;margin:0;line-height:1.15;font-family:inherit}input[type=search]{-webkit-appearance:none}:focus{outline:var(--outline-color) solid var(--outline-size);outline-offset:calc(-1*var(--outline-size))}:host([data-js-focus-visible]) :focus:not([data-focus-visible-added]){outline:0}:focus:not(:focus-visible){outline:0}.hide-focus{outline:0}*{box-sizing:border-box}.picker{contain:content;display:flex;flex-direction:column;background:var(--background);border:var(--border-size) solid var(--border-color);border-radius:var(--border-radius);width:100%;height:100%;overflow:hidden;--total-emoji-size:calc(var(--emoji-size) + (2 * var(--emoji-padding)));--total-category-emoji-size:calc(var(--category-emoji-size) + (2 * var(--category-emoji-padding)))}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.hidden{opacity:0;pointer-events:none}.abs-pos{position:absolute;left:0;top:0}.gone{display:none!important}.skintone-button-wrapper,.skintone-list{background:var(--background);z-index:3}.skintone-button-wrapper.expanded{z-index:1}.skintone-list{position:absolute;inset-inline-end:0;top:0;z-index:2;overflow:visible;border-bottom:var(--border-size) solid var(--border-color);border-radius:0 0 var(--skintone-border-radius) var(--skintone-border-radius);will-change:transform;transition:transform .2s ease-in-out;transform-origin:center 0}@media (prefers-reduced-motion:reduce){.skintone-list{transition-duration:.001s}}@supports not (inset-inline-end:0){.skintone-list{right:0}}.skintone-list.no-animate{transition:none}.tabpanel{overflow-y:auto;scrollbar-gutter:stable;-webkit-overflow-scrolling:touch;will-change:transform;min-height:0;flex:1;contain:content}.emoji-menu{display:grid;grid-template-columns:repeat(var(--num-columns),var(--total-emoji-size));justify-content:space-around;align-items:flex-start;width:100%}.emoji-menu.visibility-auto{content-visibility:auto;contain-intrinsic-size:calc(var(--num-columns)*var(--total-emoji-size)) calc(var(--num-rows)*var(--total-emoji-size))}.category{padding:var(--emoji-padding);font-size:var(--category-font-size);color:var(--category-font-color)}.emoji,button.emoji{font-size:var(--emoji-size);display:flex;align-items:center;justify-content:center;border-radius:100%;height:var(--total-emoji-size);width:var(--total-emoji-size);line-height:1;overflow:hidden;font-family:var(--emoji-font-family);cursor:pointer}@media (hover:hover) and (pointer:fine){.emoji:hover,button.emoji:hover{background:var(--button-hover-background)}}.emoji.active,.emoji:active,button.emoji.active,button.emoji:active{background:var(--button-active-background)}.onscreen .custom-emoji::after{content:"";width:var(--emoji-size);height:var(--emoji-size);background-repeat:no-repeat;background-position:center center;background-size:contain;background-image:var(--custom-emoji-background)}.nav,.nav-button{align-items:center}.nav{display:grid;justify-content:space-between;contain:content}.nav-button{display:flex;justify-content:center}.nav-emoji{font-size:var(--category-emoji-size);width:var(--total-category-emoji-size);height:var(--total-category-emoji-size)}.indicator-wrapper{display:flex;border-bottom:1px solid var(--border-color)}.indicator{width:calc(100%/var(--num-groups));height:var(--indicator-height);opacity:var(--indicator-opacity);background-color:var(--indicator-color);will-change:transform,opacity;transition:opacity .1s linear,transform .25s ease-in-out}@media (prefers-reduced-motion:reduce){.indicator{will-change:opacity;transition:opacity .1s linear}}.pad-top,input.search{background:var(--background);width:100%}.pad-top{height:var(--emoji-padding);z-index:3}.search-row{display:flex;align-items:center;position:relative;padding-inline-start:var(--emoji-padding);padding-bottom:var(--emoji-padding)}.search-wrapper{flex:1;min-width:0}input.search{padding:var(--input-padding);border-radius:var(--input-border-radius);border:var(--input-border-size) solid var(--input-border-color);color:var(--input-font-color);font-size:var(--input-font-size);line-height:var(--input-line-height)}input.search::placeholder{color:var(--input-placeholder-color)}.favorites{overflow-y:auto;scrollbar-gutter:stable;display:flex;flex-direction:row;border-top:var(--border-size) solid var(--border-color);contain:content}.message{padding:var(--emoji-padding)}' + `:host{--emoji-font-family:${'"Twemoji Mozilla","Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji","EmojiOne Color","Android Emoji",sans-serif'}}`;
+      t.textContent = ':host{--emoji-size:1.375rem;--emoji-padding:0.5rem;--category-emoji-size:var(--emoji-size);--category-emoji-padding:var(--emoji-padding);--indicator-height:3px;--input-border-radius:0.5rem;--input-border-size:1px;--input-font-size:1rem;--input-line-height:1.5;--input-padding:0.25rem;--num-columns:8;--outline-size:2px;--border-size:1px;--border-radius:0;--skintone-border-radius:1rem;--category-font-size:1rem;display:flex;width:min-content;height:400px}:host,:host(.light){color-scheme:light;--background:#fff;--border-color:#e0e0e0;--indicator-color:#385ac1;--input-border-color:#999;--input-font-color:#111;--input-placeholder-color:#999;--outline-color:#999;--category-font-color:#111;--button-active-background:#e6e6e6;--button-hover-background:#d9d9d9}:host(.dark){color-scheme:dark;--background:#222;--border-color:#444;--indicator-color:#5373ec;--input-border-color:#ccc;--input-font-color:#efefef;--input-placeholder-color:#ccc;--outline-color:#fff;--category-font-color:#efefef;--button-active-background:#555555;--button-hover-background:#484848}@media (prefers-color-scheme:dark){:host{color-scheme:dark;--background:#222;--border-color:#444;--indicator-color:#5373ec;--input-border-color:#ccc;--input-font-color:#efefef;--input-placeholder-color:#ccc;--outline-color:#fff;--category-font-color:#efefef;--button-active-background:#555555;--button-hover-background:#484848}}:host([hidden]){display:none}button{margin:0;padding:0;border:0;background:0 0;box-shadow:none;-webkit-tap-highlight-color:transparent}button::-moz-focus-inner{border:0}input{padding:0;margin:0;line-height:1.15;font-family:inherit}input[type=search]{-webkit-appearance:none}:focus{outline:var(--outline-color) solid var(--outline-size);outline-offset:calc(-1*var(--outline-size))}:host([data-js-focus-visible]) :focus:not([data-focus-visible-added]){outline:0}:focus:not(:focus-visible){outline:0}.hide-focus{outline:0}*{box-sizing:border-box}.picker{contain:content;display:flex;flex-direction:column;background:var(--background);border:var(--border-size) solid var(--border-color);border-radius:var(--border-radius);width:100%;height:100%;overflow:hidden;--total-emoji-size:calc(var(--emoji-size) + (2 * var(--emoji-padding)));--total-category-emoji-size:calc(var(--category-emoji-size) + (2 * var(--category-emoji-padding)))}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.hidden{opacity:0;pointer-events:none}.abs-pos{position:absolute;left:0;top:0}.gone{display:none!important}.skintone-button-wrapper,.skintone-list{background:var(--background);z-index:3}.skintone-button-wrapper.expanded{z-index:1}.skintone-list{position:absolute;inset-inline-end:0;top:0;z-index:2;overflow:visible;border-bottom:var(--border-size) solid var(--border-color);border-radius:0 0 var(--skintone-border-radius) var(--skintone-border-radius);will-change:transform;transition:transform .2s ease-in-out;transform-origin:center 0}@media (prefers-reduced-motion:reduce){.skintone-list{transition-duration:.001s}}@supports not (inset-inline-end:0){.skintone-list{right:0}}.skintone-list.no-animate{transition:none}.tabpanel{overflow-y:auto;scrollbar-gutter:stable;-webkit-overflow-scrolling:touch;will-change:transform;min-height:0;flex:1;contain:content}.emoji-menu{display:grid;grid-template-columns:repeat(var(--num-columns),var(--total-emoji-size));justify-content:space-around;align-items:flex-start;width:100%}.emoji-menu.visibility-auto{content-visibility:auto;contain-intrinsic-size:calc(var(--num-columns)*var(--total-emoji-size)) calc(var(--num-rows)*var(--total-emoji-size))}.category{padding:var(--emoji-padding);font-size:var(--category-font-size);color:var(--category-font-color)}.emoji,button.emoji{font-size:var(--emoji-size);display:flex;align-items:center;justify-content:center;border-radius:100%;height:var(--total-emoji-size);width:var(--total-emoji-size);line-height:1;overflow:hidden;font-family:var(--emoji-font-family);cursor:pointer}@media (hover:hover) and (pointer:fine){.emoji:hover,button.emoji:hover{background:var(--button-hover-background)}}.emoji.active,.emoji:active,button.emoji.active,button.emoji:active{background:var(--button-active-background)}.onscreen .custom-emoji::after{content:"";width:var(--emoji-size);height:var(--emoji-size);background-repeat:no-repeat;background-position:center center;background-size:contain;background-image:var(--custom-emoji-background)}.nav,.nav-button{align-items:center}.nav{display:grid;justify-content:space-between;contain:content}.nav-button{display:flex;justify-content:center}.nav-emoji{font-size:var(--category-emoji-size);width:var(--total-category-emoji-size);height:var(--total-category-emoji-size)}.indicator-wrapper{display:flex;border-bottom:1px solid var(--border-color)}.indicator{width:calc(100%/var(--num-groups));height:var(--indicator-height);opacity:var(--indicator-opacity);background-color:var(--indicator-color);will-change:transform,opacity;transition:opacity .1s linear,transform .25s ease-in-out}@media (prefers-reduced-motion:reduce){.indicator{will-change:opacity;transition:opacity .1s linear}}.pad-top,input.search{background:var(--background);width:100%}.pad-top{height:var(--emoji-padding);z-index:3}.search-row{display:flex;align-items:center;position:relative;padding-inline-start:var(--emoji-padding);padding-bottom:var(--emoji-padding)}.search-wrapper{flex:1;min-width:0}input.search{padding:var(--input-padding);border-radius:var(--input-border-radius);border:var(--input-border-size) solid var(--input-border-color);color:var(--input-font-color);font-size:var(--input-font-size);line-height:var(--input-line-height)}input.search::placeholder{color:var(--input-placeholder-color)}.favorites{overflow-y:auto;scrollbar-gutter:stable;display:flex;flex-direction:row;border-top:var(--border-size) solid var(--border-color);contain:content}.message{padding:var(--emoji-padding)}' + oo;
       this.shadowRoot.appendChild(t);
       this._ctx = {
         locale: "en",
@@ -4295,6 +4366,7 @@ https://nettleweb.com/
     write(e) {}
     flush() {}
   }
+  const vo = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
   const wo = {
     encode: e => {
       let t = "";
@@ -4303,11 +4375,11 @@ https://nettleweb.com/
       for (let o = 0; o < e.length; o++) {
         n = n << 8 | e[o];
         for (r += 8; r >= 5;) {
-          t += "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[n >> r - 5 & 31];
+          t += vo[n >> r - 5 & 31];
           r -= 5;
         }
       }
-      for (r > 0 && (t += "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[n << 5 - r & 31]); t.length % 8 != 0;) {
+      for (r > 0 && (t += vo[n << 5 - r & 31]); t.length % 8 != 0;) {
         t += "=";
       }
       return t;
@@ -4318,7 +4390,7 @@ https://nettleweb.com/
       let n = 0;
       let r = 0;
       for (let o = 0; o < e.length; o++) {
-        const a = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".indexOf(e[o].toUpperCase());
+        const a = vo.indexOf(e[o].toUpperCase());
         if (a < 0) {
           throw Error("Invalid character found in Base32 string.");
         }
@@ -4333,9 +4405,10 @@ https://nettleweb.com/
     }
   };
   const ko = Object.freeze(Object.setPrototypeOf(wo, null));
+  const Co = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   const Eo = new Uint8Array(new ArrayBuffer(256), 0, 256);
   for (let e = 0; e < 64; e++) {
-    Eo["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".charCodeAt(e)] = e;
+    Eo[Co.charCodeAt(e)] = e;
   }
   const Ao = {
     encode: e => {
@@ -4343,7 +4416,7 @@ https://nettleweb.com/
       let n = "";
       for (let r = 0; r < t; r += 3) {
         const t = e[r] << 16 | e[r + 1] << 8 | e[r + 2];
-        n += "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[t >> 18 & 63] + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[t >> 12 & 63] + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[t >> 6 & 63] + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[63 & t];
+        n += Co[t >> 18 & 63] + Co[t >> 12 & 63] + Co[t >> 6 & 63] + Co[63 & t];
       }
       switch (t % 3) {
         case 1:
@@ -4368,10 +4441,11 @@ https://nettleweb.com/
     }
   };
   const To = Object.freeze(Object.setPrototypeOf(Ao, null));
+  const xo = "0123456789abcdef";
   const So = e => {
     let t = "";
     for (let n = 0; n <= 3; n++) {
-      t += "0123456789abcdef".charAt(e >> 8 * n + 4 & 15) + "0123456789abcdef".charAt(e >> 8 * n & 15);
+      t += xo.charAt(e >> 8 * n + 4 & 15) + xo.charAt(e >> 8 * n & 15);
     }
     return t;
   };
@@ -5416,6 +5490,7 @@ https://nettleweb.com/
       configurable: false
     });
   }
+  const oa = na;
   const aa = [.2, 0.375, 0.5555555555555556, 0.6666666666666666];
   const ia = (e, t) => n => {
     const r = 4 * e + n - 4;
@@ -5432,6 +5507,8 @@ https://nettleweb.com/
       i: l
     };
   };
+  const sa = 0;
+  const ca = 3;
   const la = e => new Uint8Array(e);
   const da = e => {
     const t = Error("lean-qr error " + e);
@@ -5882,8 +5959,8 @@ https://nettleweb.com/
   };
   const Wa = [];
   const qa = (e = da(1), {
-    minCorrectionLevel: t = 0,
-    maxCorrectionLevel: n = 3,
+    minCorrectionLevel: t = sa,
+    maxCorrectionLevel: n = ca,
     minVersion: r = 1,
     maxVersion: o = 40,
     mask: a,
@@ -5939,15 +6016,18 @@ https://nettleweb.com/
     modes: [...Ta, ...e],
     ...n
   });
-  var Xa = new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0, 0]);
-  var Ka = new Uint8Array([0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0, 0]);
-  var Za = new Uint8Array([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
+  var Va = Uint8Array;
+  var Ga = Uint16Array;
+  var Ja = Int32Array;
+  var Xa = new Va([0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0, 0]);
+  var Ka = new Va([0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0, 0]);
+  var Za = new Va([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
   var Ya = function (e, t) {
-    var n = new Uint16Array(31);
+    var n = new Ga(31);
     for (var r = 0; r < 31; ++r) {
       n[r] = t += 1 << e[r - 1];
     }
-    var o = new Int32Array(n[30]);
+    var o = new Ja(n[30]);
     for (r = 1; r < 30; ++r) {
       for (var a = n[r]; a < n[r + 1]; ++a) {
         o[a] = a - n[r] << 5 | r;
@@ -5965,7 +6045,7 @@ https://nettleweb.com/
   ei[258] = 28;
   var ti = Ya(Ka, 0);
   var ni = ti.b;
-  var ri = new Uint16Array(32768);
+  var ri = new Ga(32768);
   for (var oi = 0; oi < 32768; ++oi) {
     var ti;
     var ni;
@@ -5978,18 +6058,18 @@ https://nettleweb.com/
   var ii = function (e, t, n) {
     var r = e.length;
     var o = 0;
-    for (var a = new Uint16Array(t); o < r; ++o) {
+    for (var a = new Ga(t); o < r; ++o) {
       if (e[o]) {
         ++a[e[o] - 1];
       }
     }
     var i;
-    var s = new Uint16Array(t);
+    var s = new Ga(t);
     for (o = 1; o < t; ++o) {
       s[o] = s[o - 1] + a[o - 1] << 1;
     }
     if (n) {
-      i = new Uint16Array(1 << t);
+      i = new Ga(1 << t);
       var c = 15 - t;
       for (o = 0; o < r; ++o) {
         if (e[o]) {
@@ -6002,7 +6082,7 @@ https://nettleweb.com/
         }
       }
     } else {
-      i = new Uint16Array(r);
+      i = new Ga(r);
       for (o = 0; o < r; ++o) {
         if (e[o]) {
           i[o] = ri[s[e[o] - 1]++] >> 15 - e[o];
@@ -6011,7 +6091,7 @@ https://nettleweb.com/
     }
     return i;
   };
-  var si = new Uint8Array(288);
+  var si = new Va(288);
   for (oi = 0; oi < 144; ++oi) {
     si[oi] = 8;
   }
@@ -6024,7 +6104,7 @@ https://nettleweb.com/
   for (oi = 280; oi < 288; ++oi) {
     si[oi] = 8;
   }
-  var ci = new Uint8Array(32);
+  var ci = new Va(32);
   for (oi = 0; oi < 32; ++oi) {
     ci[oi] = 5;
   }
@@ -6057,7 +6137,7 @@ https://nettleweb.com/
     if (null == n || n > e.length) {
       n = e.length;
     }
-    return new Uint8Array(e.subarray(t, n));
+    return new Va(e.subarray(t, n));
   };
   var gi = ["unexpected EOF", "invalid block type", "invalid length/literal", "invalid distance", "stream finished", "no stream handler",, "no callback", "invalid UTF-8 data", "extra field too long", "date not in range 1980-2099", "filename too long", "stream finishing", "invalid zip data"];
   var bi = function (e, t, n) {
@@ -6075,18 +6155,18 @@ https://nettleweb.com/
     var o = e.length;
     var a = r ? r.length : 0;
     if (!o || t.f && !t.l) {
-      return n || new Uint8Array(0);
+      return n || new Va(0);
     }
     var i = !n;
     var s = i || 2 != t.i;
     var c = t.i;
     if (i) {
-      n = new Uint8Array(3 * o);
+      n = new Va(3 * o);
     }
     var l = function (e) {
       var t = n.length;
       if (e > t) {
-        var r = new Uint8Array(Math.max(2 * t, e));
+        var r = new Va(Math.max(2 * t, e));
         r.set(n);
         n = r;
       }
@@ -6132,8 +6212,8 @@ https://nettleweb.com/
           var C = hi(e, u + 10, 15) + 4;
           var E = k + hi(e, u + 5, 31) + 1;
           u += 14;
-          var A = new Uint8Array(E);
-          var T = new Uint8Array(19);
+          var A = new Va(E);
+          var T = new Va(19);
           for (var x = 0; x < C; ++x) {
             T[Za[x]] = hi(e, u + 3 * x, 7);
           }
@@ -6248,7 +6328,7 @@ https://nettleweb.com/
     } while (!d);
     return h != n.length && i ? mi(n, 0, h) : n.subarray(0, h);
   };
-  var vi = new Uint8Array(0);
+  var vi = new Va(0);
   var wi = "undefined" != typeof TextDecoder && new TextDecoder();
   try {
     wi.decode(vi, {
@@ -6325,6 +6405,7 @@ https://nettleweb.com/
       return Li;
     }
   }, null));
+  const ji = Ii;
   const Mi = Object.freeze(Object.setPrototypeOf({
     length: 0,
     clear: () => {},
@@ -6364,9 +6445,10 @@ https://nettleweb.com/
     return n.readAsDataURL(e);
   };
   let Hi;
+  const Ri = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   const zi = "undefined" == typeof Uint8Array ? [] : new Uint8Array(256);
   for (let e = 0; e < 64; e++) {
-    zi["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".charCodeAt(e)] = e;
+    zi[Ri.charCodeAt(e)] = e;
   }
   const Wi = "function" == typeof ArrayBuffer;
   const qi = (e, t) => {
@@ -7580,7 +7662,7 @@ https://nettleweb.com/
       return e;
     }
     function s(e) {
-      return "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(e)));
+      return "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(e)));
     }
     function c(e) {
       return new Date(e).toLocaleString("POSIX", {
@@ -7698,7 +7780,7 @@ https://nettleweb.com/
     }
     function h(e, t) {
       return new Promise((n, r) => {
-        const o = new ArrayBuffer((t = na.NTON.encode(t)).byteLength + 10);
+        const o = new ArrayBuffer((t = oa.NTON.encode(t)).byteLength + 10);
         const a = performance.now();
         {
           const n = new Uint8Array(o);
@@ -7829,7 +7911,7 @@ https://nettleweb.com/
         r.setAttribute("allowpaymentrequest", "true");
         {
           n = e;
-          const t = "data:application/xhtml+xml;base64," + na.Base64.encode(na.UTF_8.encode(`<?xml version="1.0" encoding="utf-8" ?>\n<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" lang="en">\n\t<head>\n\t\t<meta charset="utf-8" />\n\t\t<meta name="referrer" content="no-referrer" />\n\t\t<meta name="viewport" content="width=device-width,initial-scale=1" />\n\t\t<base href="${origin}" target="_blank" />\n\t\t<link rel="icon" type="image/x-icon" href="res/google.ico" />\n\t\t<link rel="stylesheet" type="text/css" href="data:text/css;base64,Ym9keSxlbWJlZCxpZnJhbWV7cG9zaXRpb246YWJzb2x1dGU7ZGlzcGxheTpibG9jazt3aWR0aDoxMDAlO2hlaWdodDoxMDAlO21hcmdpbjowcHg7cGFkZGluZzowcHg7Ym9yZGVyOm5vbmU7b3ZlcmZsb3c6aGlkZGVuO30K" />\n\t\t<title>Google</title>\n\t</head>\n\t<body>\n\t\t<embed type="text/plain" width="1024" height="768" src="${n.replace(/[&<"']/g, e => {
+          const t = "data:application/xhtml+xml;base64," + oa.Base64.encode(oa.UTF_8.encode(`<?xml version="1.0" encoding="utf-8" ?>\n<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" lang="en">\n\t<head>\n\t\t<meta charset="utf-8" />\n\t\t<meta name="referrer" content="no-referrer" />\n\t\t<meta name="viewport" content="width=device-width,initial-scale=1" />\n\t\t<base href="${origin}" target="_blank" />\n\t\t<link rel="icon" type="image/x-icon" href="res/google.ico" />\n\t\t<link rel="stylesheet" type="text/css" href="data:text/css;base64,Ym9keSxlbWJlZCxpZnJhbWV7cG9zaXRpb246YWJzb2x1dGU7ZGlzcGxheTpibG9jazt3aWR0aDoxMDAlO2hlaWdodDoxMDAlO21hcmdpbjowcHg7cGFkZGluZzowcHg7Ym9yZGVyOm5vbmU7b3ZlcmZsb3c6aGlkZGVuO30K" />\n\t\t<title>Google</title>\n\t</head>\n\t<body>\n\t\t<embed type="text/plain" width="1024" height="768" src="${n.replace(/[&<"']/g, e => {
             switch (e) {
               case "&":
                 return "&amp;";
@@ -7942,7 +8024,7 @@ https://nettleweb.com/
       });
     }
     t.title = "NettleWeb";
-    Ii._(e);
+    ji._(e);
     e.focus();
     e.onerror = (e, t, n, r, o) => {
       const a = "Unhandled error at " + (t || "unknown source") + " " + (n || "X") + ":" + (r || "X") + "\n\n Message: " + o;
@@ -7995,7 +8077,7 @@ https://nettleweb.com/
     const T = new URLSearchParams(C.search);
     const x = t.head;
     const S = t.body;
-    const L = Ii.$;
+    const L = ji.$;
     const I = n("error");
     const j = n("frame");
     const M = n("frame-view");
@@ -8163,9 +8245,10 @@ https://nettleweb.com/
         if (null == t) {
           throw Error("Storage interface not available.");
         }
+        const n = "___whitespider___";
         const r = Date.now().toString(36);
-        t.setItem("___whitespider___", r);
-        if (t.getItem("___whitespider___") !== r) {
+        t.setItem(n, r);
+        if (t.getItem(n) !== r) {
           throw Error("Storage test failed: value mismatch");
         }
         return t;
@@ -8235,7 +8318,7 @@ https://nettleweb.com/
       if (!Ve.ok) {
         throw Error("Remote returned error status code: " + Ve.status);
       }
-      K = na.NTON.decode(yi(new Uint8Array(await Ve.arrayBuffer()), {
+      K = oa.NTON.decode(yi(new Uint8Array(await Ve.arrayBuffer()), {
         i: 2
       }, undefined && undefined.out, undefined && undefined.dictionary));
     } catch (Ge) {
@@ -8320,7 +8403,7 @@ https://nettleweb.com/
           switch (t[0]) {
             case 1:
               if ("string" != typeof q) {
-                q = na.UTF_8.decode(t.subarray(1));
+                q = oa.UTF_8.decode(t.subarray(1));
               }
               if (null != ne) {
                 ne();
@@ -8328,12 +8411,12 @@ https://nettleweb.com/
               break;
             case 2:
               if (null != re) {
-                re(na.UTF_8.decode(t.subarray(1)));
+                re(oa.UTF_8.decode(t.subarray(1)));
               }
               break;
             case 3:
               if (t.byteLength > 1) {
-                Qe.textContent = na.UTF_8.decode(t.subarray(1));
+                Qe.textContent = oa.UTF_8.decode(t.subarray(1));
                 Qe.style.display = "block";
               }
               break;
@@ -8342,42 +8425,42 @@ https://nettleweb.com/
               break;
             case 5:
               if (null != ie) {
-                const e = JSON.parse(na.UTF_8.decode(t.subarray(1)));
+                const e = JSON.parse(oa.UTF_8.decode(t.subarray(1)));
                 ie(e[0], e[1]);
               }
               break;
             case 6:
               if (null != ce) {
-                const e = JSON.parse(na.UTF_8.decode(t.subarray(1)));
+                const e = JSON.parse(oa.UTF_8.decode(t.subarray(1)));
                 ce(e[0], e[1], e[2]);
               }
               break;
             case 7:
               if (null != le) {
-                const e = JSON.parse(na.UTF_8.decode(t.subarray(1)));
+                const e = JSON.parse(oa.UTF_8.decode(t.subarray(1)));
                 le(e[0], e[1]);
               }
               break;
             case 8:
               if (null != de) {
-                const e = JSON.parse(na.UTF_8.decode(t.subarray(1)));
+                const e = JSON.parse(oa.UTF_8.decode(t.subarray(1)));
                 de(e[0], e[1]);
               }
               break;
             case 9:
               if (null != ue) {
-                const e = JSON.parse(na.UTF_8.decode(t.subarray(1)));
+                const e = JSON.parse(oa.UTF_8.decode(t.subarray(1)));
                 ue(e[0], e[1], e[2]);
               }
               break;
             case 10:
               if (null != oe) {
-                oe(na.UTF_8.decode(t.subarray(1)));
+                oe(oa.UTF_8.decode(t.subarray(1)));
               }
               break;
             case 11:
               if (null != ae) {
-                ae(na.UTF_8.decode(t.subarray(1)));
+                ae(oa.UTF_8.decode(t.subarray(1)));
               }
               break;
             case 12:
@@ -8385,7 +8468,7 @@ https://nettleweb.com/
                 const n = new DataView(e, 1, 8).getFloat64(0, true);
                 const r = R.get(n);
                 if (null != r) {
-                  r[0](na.NTON.decode(t.subarray(9)));
+                  r[0](oa.NTON.decode(t.subarray(9)));
                   R.delete(n);
                 }
               }
@@ -8395,7 +8478,7 @@ https://nettleweb.com/
                 const n = new DataView(e, 1, 8).getFloat64(0, true);
                 const r = R.get(n);
                 if (null != r) {
-                  r[1](na.UTF_8.decode(t.subarray(9)));
+                  r[1](oa.UTF_8.decode(t.subarray(9)));
                   R.delete(n);
                 }
               }
@@ -8405,7 +8488,7 @@ https://nettleweb.com/
           }
         });
         if (null != W) {
-          V.send(na.UTF_8.encode("\x01" + W));
+          V.send(oa.UTF_8.encode("\x01" + W));
         }
       }
       function ct(e) {
@@ -8545,7 +8628,7 @@ https://nettleweb.com/
           if (null == t) {
             return void o("Error: Failed to decode image file.");
           }
-          const n = "data:image/jpeg;base64," + na.Base64.encode(new Uint8Array(await t.arrayBuffer()));
+          const n = "data:image/jpeg;base64," + oa.Base64.encode(new Uint8Array(await t.arrayBuffer()));
           dt(n);
           z.setItem("__set_image", n);
         } else {
@@ -8606,7 +8689,7 @@ https://nettleweb.com/
               const r = n.urlToImage || null;
               {
                 const n = t.createElement("img");
-                n.src = null == r ? "/res/preview.svg" : "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(r)));
+                n.src = null == r ? "/res/preview.svg" : "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(r)));
                 n.alt = "Preview";
                 n.width = 160;
                 n.height = 90;
@@ -8814,7 +8897,7 @@ https://nettleweb.com/
         }
         {
           const e = t.createElement("img");
-          e.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(c)));
+          e.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(c)));
           e.alt = "Avatar";
           e.width = 32;
           e.height = 32;
@@ -9078,7 +9161,7 @@ https://nettleweb.com/
           }
           {
             const n = t.createElement("img");
-            n.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(e.icon)));
+            n.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(e.icon)));
             n.alt = "Avatar";
             n.width = 40;
             n.height = 40;
@@ -9300,7 +9383,7 @@ https://nettleweb.com/
         } = e;
         {
           const e = t.createElement("img");
-          e.src = null == n ? "/res/preview.svg" : "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(n)));
+          e.src = null == n ? "/res/preview.svg" : "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(n)));
           e.alt = "Preview";
           e.width = 160;
           e.height = 90;
@@ -9504,7 +9587,7 @@ https://nettleweb.com/
               default:
                 if ((e = n.videoStreams[0]?.url || "").length > 4) {
                   const a = t.createElement("video");
-                  a.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(e)));
+                  a.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(e)));
                   a.width = 800;
                   a.height = 600;
                   a.volume = .8;
@@ -9512,7 +9595,7 @@ https://nettleweb.com/
                   a.controls = true;
                   a.preservesPitch = false;
                   if ((e = n.thumbnails.pop().url || "").length > 4) {
-                    a.poster = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(e)));
+                    a.poster = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(e)));
                   }
                   a.onerror = () => {
                     o("Video stream failed to load. Falling back to official server.");
@@ -9526,7 +9609,7 @@ https://nettleweb.com/
                   gn.appendChild(a);
                 } else if ((e = n.audioStreams[0]?.url || "").length > 4) {
                   const n = t.createElement("audio");
-                  n.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(e)));
+                  n.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(e)));
                   n.volume = .8;
                   n.autoplay = true;
                   n.controls = true;
@@ -10052,7 +10135,7 @@ https://nettleweb.com/
         }) {
           const i = t.createElement("div");
           const c = t.createElement("img");
-          c.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(a)));
+          c.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(a)));
           c.alt = "Avatar";
           c.width = 48;
           c.height = 48;
@@ -10117,7 +10200,7 @@ https://nettleweb.com/
           }
           {
             const e = t.createElement("img");
-            e.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(c)));
+            e.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(c)));
             e.alt = "Avatar";
             e.width = 32;
             e.height = 32;
@@ -10220,7 +10303,7 @@ https://nettleweb.com/
             type: n,
             url: r
           } of l) {
-            const o = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(r)));
+            const o = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(r)));
             {
               const n = t.createElement("a");
               n.rel = "noopener nofollow";
@@ -10362,7 +10445,7 @@ https://nettleweb.com/
           c.setAttribute("data-user", n);
           {
             const e = t.createElement("img");
-            e.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(i)));
+            e.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(i)));
             e.alt = "Avatar";
             e.width = 32;
             e.height = 32;
@@ -11138,7 +11221,7 @@ https://nettleweb.com/
                 oe = ae = null;
                 o("Failed to process the request. Message: " + e);
               };
-              V.send(na.UTF_8.encode("\x02" + JSON.stringify(mo, undefined, 0)), {
+              V.send(oa.UTF_8.encode("\x02" + JSON.stringify(mo, undefined, 0)), {
                 compress: true
               });
             }
@@ -11296,7 +11379,7 @@ https://nettleweb.com/
         xo.setAttribute("data-current", "1");
         Co.disabled = false;
         Co.innerHTML = "Add Friend";
-        To.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(t.icon)));
+        To.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(t.icon)));
         ko.textContent = t.bio || "Flamepass User";
         Ao.innerHTML = "";
         Ao.onscrollend = null;
@@ -11372,7 +11455,7 @@ https://nettleweb.com/
           throw Error("Internal Error");
         }
         const a = t.createElement("img");
-        a.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(n.icon)));
+        a.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(n.icon)));
         a.alt = "Avatar";
         a.width = 48;
         a.height = 48;
@@ -12020,7 +12103,7 @@ https://nettleweb.com/
           e.textContent = A.bio || "Flamepass User";
           r.textContent = A.name || "Not set";
           a.textContent = A.email || "Not set";
-          w.src = k.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(na.Base64.encode(na.UTF_8.encode(A.icon)));
+          w.src = k.src = "https://" + ki.b + "/" + ki.c + "?OO0O0OO0=" + encodeURIComponent(oa.Base64.encode(oa.UTF_8.encode(A.icon)));
           i.textContent = T;
           E.textContent = T;
           n("ac-uid").textContent = x;
@@ -12384,7 +12467,7 @@ https://nettleweb.com/
           b.onclick = () => {
             h(43, W).then(e => {
               if ("string" == typeof e && 2048 === e.length) {
-                V.send(na.UTF_8.encode("\x01" + (W = e)));
+                V.send(oa.UTF_8.encode("\x01" + (W = e)));
                 z.setItem("__secrets_", e);
                 b.disabled = true;
               } else {
@@ -12432,7 +12515,7 @@ https://nettleweb.com/
                 n.innerHTML = 'In order to enable two-factor authentication (2FA), please follow the steps below:\n1. Install an <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank" rel="noopener">authenticator app</a> if you don\'t have one already.\n2. Scan the QR code below or manually input the secret to save your account onto the authenticator.\n3. Input the 6-digit verification code generated below to verify.\n\nAfter enabling 2FA, you will be required to input the generated 6-digit verification code everytime as you login for enhanced account security.\n\nTo avoid being locked out, save the secret or a screenshot of the QR code across multiple devices, so that it could be restored back into the authenticator in case you lost your data.';
                 e.appendChild(n);
               }
-              const n = na.Base32.encode(crypto.getRandomValues(new Uint8Array(new ArrayBuffer(32), 0, 32)));
+              const n = oa.Base32.encode(crypto.getRandomValues(new Uint8Array(new ArrayBuffer(32), 0, 32)));
               {
                 const r = t.createElement("img");
                 r.alt = "QR Code";
@@ -12512,7 +12595,7 @@ https://nettleweb.com/
             ne = re = null;
             e(t);
           };
-          V.send(na.UTF_8.encode("\x01" + W));
+          V.send(oa.UTF_8.encode("\x01" + W));
         });
         if (null == xa) {
           return void (await ga());
@@ -12765,7 +12848,7 @@ https://nettleweb.com/
                   if (6 === t.length && /^\d+$/.test(t)) {
                     h(17, [s, t]).then(e => {
                       if ("string" == typeof e && 2048 === e.length) {
-                        V.send(na.UTF_8.encode("\x01" + (W = e)));
+                        V.send(oa.UTF_8.encode("\x01" + (W = e)));
                         z.setItem("__secrets_", e);
                         ga();
                       } else {
@@ -12868,7 +12951,7 @@ https://nettleweb.com/
       }
       function Aa(e) {
         if (2048 === e.length) {
-          V.send(na.UTF_8.encode("\x01" + (W = e)));
+          V.send(oa.UTF_8.encode("\x01" + (W = e)));
           z.setItem("__secrets_", e);
           z.setItem("__?2fa", "0");
           return void ga();
@@ -12910,7 +12993,7 @@ https://nettleweb.com/
           if (6 === t.length && /^\d+$/.test(t)) {
             h(45, [e, t]).then(e => {
               if ("string" == typeof e && 2048 === e.length) {
-                V.send(na.UTF_8.encode("\x01" + (W = e)));
+                V.send(oa.UTF_8.encode("\x01" + (W = e)));
                 z.setItem("__secrets_", e);
                 z.setItem("__?2fa", "1");
                 ga();
