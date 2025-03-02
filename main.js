@@ -1,7 +1,7 @@
 /*! For license information please see out.js.LICENSE.txt */
-https://flamepass.com/
+https://nettleweb.com/
 
-/*! Copyright (C) 2025 flamepass.com; All rights reserved. !*/
+/*! Copyright (C) 2024 nettleweb.com; All rights reserved. !*/
 "use strict";
 (() => {
   function e() {
